@@ -13,6 +13,49 @@ namespace ConsoleApp2
 
     }
 
+    // 朝練版
+    class Test
+    {
+        private const double _primaryForce = 0.5;
+        private const double _secondaryForce = 0.7;
+        private const double _mass = 0.3;
+        private const int _delay = 1;
+
+        double getDistanceTravelled(int time)
+        {
+            double result;
+            result = getMoveDist(getFirstAcc(), getPrimaryTime(time));
+            int secondaryTime = time - _delay;
+            if(secondaryTime > 0)
+            {
+                double primaryVel = getFirstAcc() * _delay;
+                result += primaryVel * secondaryTime + getMoveDist(getSecondAcc(), secondaryTime);
+            }
+            return result;
+        }
+
+        double getMoveDist(double acc, int time)
+        {
+            return 0.5 * acc * time * time;
+        }
+
+        int getPrimaryTime(int time)
+        {
+            return Math.Min(time, _delay);
+        }
+
+        double getSecondAcc()
+        {
+            return (_primaryForce + _secondaryForce) / _mass;
+        }
+
+        double getFirstAcc()
+        {
+            return _primaryForce / _mass;
+        }
+    }
+
+    // 安達勉強用
     class Adachi
     {
         private const double _primaryForce = 0.5;
